@@ -10,6 +10,12 @@ import { createTRPCContext } from "@/server/api/trpc";
  * handling a HTTP request (e.g. when you make requests from Client Components).
  */
 const createContext = async (req: NextRequest) => {
+  const token = req.headers.get("Authorization");
+
+  if (!token) {
+    throw new Error("Authorization token missing");
+  }
+
   return createTRPCContext({
     headers: req.headers,
   });
